@@ -25,7 +25,7 @@ public class Dom4jTest {
     @Before
     public void init() throws DocumentException {
         SAXReader saxReader = new SAXReader();
-        document = saxReader.read(getClass().getResourceAsStream("demo.xml"));
+        document = saxReader.read(getClass().getResourceAsStream("history_forecast.xml"));
     }
 
     @Test
@@ -41,18 +41,11 @@ public class Dom4jTest {
 
     @Test
     public void testXpath() {
-        List<Node> nodes = document.selectNodes("//G_CONSIDERED_DATE/TOTAL_GUEST");
+        List<Node> nodes = document.selectNodes("//G_CONSIDERED_DATE");
         for (Node node : nodes) {
-            System.out.println(node.getName() + ":" + node.getStringValue());
-        }
-
-        List<Node> dates = document.selectNodes("//G_CONSIDERED_DATE");
-        for (Node date : dates) {
-            Element element = (Element) date;
-            Element totalGuest = element.element("TOTAL_GUEST");
-            System.out.println(totalGuest.getQualifiedName() + ":" + totalGuest.getTextTrim());
-            Element morningRooms = element.element("ROOMS_MORNING");
-            System.out.println(morningRooms.getQualifiedName() + ":" + morningRooms.getTextTrim());
+            Element element = (Element) node;
+            Element curDate = element.element("CONSIDERED_DATE");
+            System.out.println(curDate.getQualifiedName() + ":" + curDate.getTextTrim());
         }
     }
 }
